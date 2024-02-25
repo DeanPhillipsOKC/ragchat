@@ -8,9 +8,8 @@ class CollectionUseCases:
         # Logic to add a collection
         print(f"In add_collection with name of {name}")
 
-    def list_collection(self, name):
-        # return self.repository.list()
-        pass
+    def list_collection(self):
+        self.repository.list()
     
     def select_collection(self, guid):
         # return self.repository.select(guid)
