@@ -8,8 +8,7 @@ class InMemoryCollectionRepository(ICollectionRepository):
     def add(self, collection):
         self.collections[collection.id] = collection
     
-    def list(self):
-        print("listing")
+    def list(self) -> list[Collection]:
         return list(self.collections.values())
 
     def select(self, guid):

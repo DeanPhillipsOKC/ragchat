@@ -1,15 +1,18 @@
 from domain.collections.collection_repository_interface import ICollectionRepository
+from domain.collections.collection import Collection
+from uuid import uuid4
 
 class CollectionsUseCases:
     def __init__(self, repository: ICollectionRepository):
         self.repository = repository
 
-    def add_collection(self, name):
+    def add_collection(self, name: str):
         # Logic to add a collection
-        print(f"In add_collection with name of {name}")
+        collection = Collection(id=uuid4(), name=name)
+        self.repository.add(collection)
 
-    def list_collection(self):
-        self.repository.list()
+    def list_collection(self) -> list[Collection]:
+        return self.repository.list()
     
     def select_collection(self, guid):
         # return self.repository.select(guid)
