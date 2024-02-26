@@ -7,16 +7,16 @@ class CollectionsUseCases:
     def __init__(self, repository: ICollectionRepository):
         self.repository = repository
 
-    def add_collection(self, name: str) -> Collection:
+    def add(self, name: str) -> Collection:
         # Logic to add a collection
         collection = Collection(id=uuid4(), name=name)
         self.repository.add(collection)
         return collection
 
-    def delete_collection(self, id: UUID) -> Collection:
+    def delete(self, id: UUID) -> Collection:
         return self.repository.delete(id)
 
-    def list_collection(self) -> list[ListCollectionsViewModel]:
+    def list(self) -> list[ListCollectionsViewModel]:
         collections = self.repository.list()
         selected_collection = self.repository.get_selected()
 
@@ -29,6 +29,6 @@ class CollectionsUseCases:
             ) for collection in collections
         ]
     
-    def select_collection(self, id: UUID) -> Collection:
+    def select(self, id: UUID) -> Collection:
         return self.repository.select(id)
         

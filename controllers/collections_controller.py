@@ -35,7 +35,7 @@ class CollectionsController(Cmd):
             print("Usage: add <name>")
             return
 
-        collection = self.collection_use_cases.add_collection(arg)
+        collection = self.collection_use_cases.add(arg)
 
         print(f"Added a new collection with ID: {collection.id}")
 
@@ -53,14 +53,14 @@ class CollectionsController(Cmd):
         
         guid = to_uuid4(arg)
 
-        deleted_collection = self.collection_use_cases.delete_collection(guid)
+        deleted_collection = self.collection_use_cases.delete(guid)
         
         if deleted_collection:
             print(f"Deleted colection with ID: {deleted_collection.id} and Name: {deleted_collection.name}")
 
     def do_list(self, arg):
         """List all collections"""
-        collections = self.collection_use_cases.list_collection()
+        collections = self.collection_use_cases.list()
 
         # Print header
         print(f"{'ID':38} {'Name'}")
@@ -87,7 +87,7 @@ class CollectionsController(Cmd):
 
         guid = to_uuid4(arg)
 
-        collection = self.collection_use_cases.select_collection(guid)
+        collection = self.collection_use_cases.select(guid)
 
         if not collection:
             print(f"Error: Could not select the collection with ID: {arg}")
