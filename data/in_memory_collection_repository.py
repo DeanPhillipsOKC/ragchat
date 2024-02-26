@@ -11,6 +11,12 @@ class InMemoryCollectionRepository(ICollectionRepository):
     def add(self, collection):
         self.collections[collection.id] = collection
     
+    def delete(self, guid: UUID) -> Collection:
+        if guid in self.collections:
+            return self.collections.pop(guid)
+        else:
+            return None
+
     def list(self) -> list[Collection]:
         return list(self.collections.values())
 

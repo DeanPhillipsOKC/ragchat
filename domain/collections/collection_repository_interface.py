@@ -7,6 +7,9 @@ class ICollectionRepository(ABC):
     def add(self, collection): pass
 
     @abstractmethod
+    def delete(self, guid: UUID) -> Collection: pass
+
+    @abstractmethod
     def list(self) -> list[Collection]: pass
 
     @abstractmethod

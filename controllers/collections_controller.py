@@ -11,6 +11,17 @@ class CollectionsController(Cmd):
         super().__init__()
         self.collection_use_cases = collection_use_cases
 
+    def _validate_id(self, id: str, command_name: str) -> bool:
+        if not id:
+            print(f"Error: The '{command_name}' command requires a collection ID.")
+            return False
+        
+        if not is_uuid4(id):
+            print(f"Error: The '{command_name}' command requires a valid collection ID (UUID v4)")
+            return False
+        
+        return True
+
     def do_add(self, arg):
         """
         Add a new collection.
@@ -27,6 +38,25 @@ class CollectionsController(Cmd):
         collection = self.collection_use_cases.add_collection(arg)
 
         print(f"Added a new collection with ID: {collection.id}")
+
+    def do_delete(self, arg):
+        """
+        Delete a collection.
+
+        Usage: delete <ID>
+
+        <ID> is a required argument that specifies the collection that you want to delete.
+        """
+        if not self._validate_id(arg, "delete"):
+            print("Usage: delete <ID>")
+            return
+        
+        guid = to_uuid4(arg)
+
+        deleted_collection = self.collection_use_cases.delete_collection(guid)
+        
+        if deleted_collection:
+            print(f"Deleted colection with ID: {deleted_collection.id} and Name: {deleted_collection.name}")
 
     def do_list(self, arg):
         """List all collections"""
@@ -51,13 +81,8 @@ class CollectionsController(Cmd):
         <ID> is the identifier of the collection that you would like to select
         into your context.
         """
-        if not arg:
-            print("Error: The 'select' command requires a collection ID.")
-            print("Usage: add <ID>")
-            return
-        
-        if not is_uuid4(arg):
-            print("Error: The 'select' command requires a valid collection ID (UUID v4)")
+        if not self._validate_id(arg, command_name="select"):
+            print("Usage: select <ID>")
             return
 
         guid = to_uuid4(arg)

@@ -1,7 +1,7 @@
 from domain.collections.collection_repository_interface import ICollectionRepository
 from domain.collections.collection import Collection
 from .dtos import ListCollectionsViewModel
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 class CollectionsUseCases:
     def __init__(self, repository: ICollectionRepository):
@@ -12,6 +12,9 @@ class CollectionsUseCases:
         collection = Collection(id=uuid4(), name=name)
         self.repository.add(collection)
         return collection
+
+    def delete_collection(self, id: UUID) -> Collection:
+        return self.repository.delete(id)
 
     def list_collection(self) -> list[ListCollectionsViewModel]:
         collections = self.repository.list()
@@ -26,6 +29,6 @@ class CollectionsUseCases:
             ) for collection in collections
         ]
     
-    def select_collection(self, guid) -> Collection:
-        return self.repository.select(guid)
+    def select_collection(self, id: UUID) -> Collection:
+        return self.repository.select(id)
         
