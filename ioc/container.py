@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 from data.in_memory_collection_repository import InMemoryCollectionRepository
-from application.use_cases.collections_use_cases import CollectionsUseCases
+from application.use_cases.collections.use_cases import CollectionsUseCases
 from controllers.cli import CollectionsController
 from controllers.cli import Cli
 
