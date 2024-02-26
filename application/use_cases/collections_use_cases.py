@@ -6,10 +6,11 @@ class CollectionsUseCases:
     def __init__(self, repository: ICollectionRepository):
         self.repository = repository
 
-    def add_collection(self, name: str):
+    def add_collection(self, name: str) -> Collection:
         # Logic to add a collection
         collection = Collection(id=uuid4(), name=name)
         self.repository.add(collection)
+        return collection
 
     def list_collection(self) -> list[Collection]:
         return self.repository.list()

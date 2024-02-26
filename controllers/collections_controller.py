@@ -24,7 +24,9 @@ class CollectionsController(Cmd):
             print("Usage: add <name>")
             return
 
-        self.collection_use_cases.add_collection(arg)
+        collection = self.collection_use_cases.add_collection(arg)
+
+        print(f"Added a new collection with ID: {collection.id}")
 
     def do_list(self, arg):
         """List all collections"""
