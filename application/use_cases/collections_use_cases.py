@@ -14,6 +14,6 @@ class CollectionsUseCases:
     def list_collection(self) -> list[Collection]:
         return self.repository.list()
     
-    def select_collection(self, guid):
-        # return self.repository.select(guid)
-        pass
+    def select_collection(self, guid) -> Collection:
+        return self.repository.select(guid)
+        

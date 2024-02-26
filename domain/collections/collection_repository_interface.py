@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from uuid import UUID
 from .collection import Collection
 
 class ICollectionRepository(ABC):
@@ -9,4 +10,7 @@ class ICollectionRepository(ABC):
     def list(self) -> list[Collection]: pass
 
     @abstractmethod
-    def select(self, guid): pass
+    def select(self, guid: UUID) -> Collection: pass
+
+    @abstractmethod
+    def get_selected(self) -> Collection: pass
