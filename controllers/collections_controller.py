@@ -33,11 +33,12 @@ class CollectionsController(Cmd):
         collections = self.collection_use_cases.list_collection()
 
         # Print header
-        print(f"{'ID':36} {'Name'}")
-        print('-' * 50)
+        print(f"{'ID':38} {'Name'}")
+        print('-' * 52)  # Adjusted width for the 'Selected' column
 
         for collection in collections:
-            print(f"{str(collection.id):36} {collection.name}")
+            selected_mark = "*" if collection.is_selected else " "
+            print(f"{selected_mark} {collection.id:36} {collection.name}")
 
     def do_select(self, arg):
         """
