@@ -1,12 +1,12 @@
 from cmd import Cmd
-from application.use_cases.collection_use_cases import CollectionUseCases
+from application.use_cases.collections_use_cases import CollectionsUseCases
 
 class CollectionsController(Cmd):
     """Sub-command processor for collections management commands."""
 
     prompt = "(Collections)"
 
-    def __init__(self, collection_use_cases: CollectionUseCases):
+    def __init__(self, collection_use_cases: CollectionsUseCases):
         super().__init__()
         self.collection_use_cases = collection_use_cases
 

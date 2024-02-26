@@ -1,6 +1,6 @@
 from domain.collections.collection_repository_interface import ICollectionRepository
 
-class CollectionUseCases:
+class CollectionsUseCases:
     def __init__(self, repository: ICollectionRepository):
         self.repository = repository
 
