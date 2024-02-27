@@ -8,12 +8,18 @@ class CollectionsUseCases:
         self.repository = repository
 
     def add(self, name: str) -> Collection:
+        if not name:
+            raise ValueError("In order to add a new collection, a name must be provided.")
+
         # Logic to add a collection
         collection = Collection(id=uuid4(), name=name)
         self.repository.add(collection)
         return collection
 
     def delete(self, id: UUID) -> Collection:
+        if not id:
+            raise ValueError("In order to delete a collection, an ID must be provided.")
+
         return self.repository.delete(id)
 
     def list(self) -> list[ListCollectionsViewModel]:
