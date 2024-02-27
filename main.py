@@ -1,5 +1,5 @@
 from dependency_injector.wiring import Provide, inject
-from ioc.container import Container
+from ragchat.ioc.container import Container
 
 @inject
 def main():

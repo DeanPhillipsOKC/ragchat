@@ -1,5 +1,5 @@
-from domain.collections.collection_repository_interface import ICollectionRepository
-from domain.collections.collection import Collection
+from ragchat.domain.collections.collection_repository_interface import ICollectionRepository
+from ragchat.domain.collections.collection import Collection
 from .dtos import ListCollectionsViewModel
 from uuid import UUID, uuid4
 

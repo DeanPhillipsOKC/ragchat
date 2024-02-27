@@ -1,6 +1,6 @@
 from uuid import UUID
-from domain.collections.collection_repository_interface import ICollectionRepository
-from domain.collections.collection import Collection
+from ragchat.domain.collections.collection_repository_interface import ICollectionRepository
+from ragchat.domain.collections.collection import Collection
 
 class InMemoryCollectionRepository(ICollectionRepository):
     selected_collection_id = None

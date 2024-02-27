@@ -1,8 +1,8 @@
 from dependency_injector import containers, providers
-from data.in_memory_collection_repository import InMemoryCollectionRepository
-from application.use_cases.collections.use_cases import CollectionsUseCases
-from controllers.cli import CollectionsController
-from controllers.cli import Cli
+from ragchat.data.in_memory_collection_repository import InMemoryCollectionRepository
+from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
+from ragchat.controllers.cli import CollectionsController
+from ragchat.controllers.cli import Cli
 
 class Container(containers.DeclarativeContainer):
     collection_repository_factory = providers.Factory(

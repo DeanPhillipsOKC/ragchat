@@ -1,6 +1,6 @@
 from cmd import Cmd
-from application.use_cases.collections.use_cases import CollectionsUseCases
-from common.guid_utilities import is_uuid4, to_uuid4
+from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
+from ragchat.common.guid_utilities import is_uuid4, to_uuid4
 
 class CollectionsController(Cmd):
     """Sub-command processor for collections management commands."""
