@@ -1,5 +1,5 @@
 from dependency_injector import containers, providers
-from ragchat.data.in_memory_collection_repository import InMemoryCollectionRepository
+from ragchat.data.collections.in_memory_repository import InMemoryCollectionRepository
 from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
 from ragchat.controllers.cli import CollectionsController
 from ragchat.controllers.cli import Cli
