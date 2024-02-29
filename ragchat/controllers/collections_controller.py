@@ -31,7 +31,7 @@ class CollectionsController(Cmd):
         <name> is a required argument that specifies the name of the new collection.
         """
         if not arg:
-            print("Error: The 'add command requires a name for the new collection.")
+            print("Error: The 'add' command requires a name for the new collection.")
             print("Usage: add <name>")
             return
 
@@ -57,6 +57,8 @@ class CollectionsController(Cmd):
         
         if deleted_collection:
             print(f"Deleted colection with ID: {deleted_collection.id} and Name: {deleted_collection.name}")
+        else:
+            print(f"Error: Could not find a collection with ID: {arg} to delete.")
 
     def do_list(self, arg):
         """List all collections"""
