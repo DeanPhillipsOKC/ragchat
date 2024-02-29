@@ -12,13 +12,26 @@ def mock_use_cases(mocker):
 def sut(mock_use_cases):
     return CollectionsController(collection_use_cases=mock_use_cases)
 
-def test_do_add(sut, capsys):    
+@pytest.fixture
+def add_fixture(sut):
     collection = Collection(uuid4(), "Test Collection")
     sut.collection_use_cases.add.return_value = collection
+
+    return sut, collection
+
+def test_do_add(add_fixture, capsys):    
+    sut, collection = add_fixture
 
     sut.do_add("Test Collection")
 
     assert capsys.readouterr().out == f"Added a new collection with ID: {str(collection.id)}\n"
+
+def test_do_add_fails_if_name_not_provided(add_fixture, capsys):
+    sut, collection = add_fixture
+
+    sut.do_add(None)
+
+    assert capsys.readouterr().out == "Error: The 'add' command requires a name for the new collection.\nUsage: add <name>\n"
 
 @pytest.fixture
 def delete_fixture(sut):
