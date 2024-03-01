@@ -1,12 +1,13 @@
 from dependency_injector.wiring import Provide, inject
-from ioc.container import Container
+from ragchat.ioc.container import Container
 
 @inject
 def main():
     container = Container()
-    collection_use_cases = container.collection_use_cases()
-    collection_use_cases.add_collection("foo")
+    cli = container.cli_factory()
+    cli.run()
 
 if __name__ == '__main__':
     # do work
     main()
+    print("done")
