@@ -1,5 +1,6 @@
 from uuid import uuid4
 import pytest
+from ragchat.application.use_cases.collections.dtos import ListCollectionsViewModel
 from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
 from ragchat.controllers.collections_controller import CollectionsController
 from ragchat.domain.collections.collection import Collection
@@ -68,3 +69,56 @@ def test_do_delete_fails_if_id_does_not_match_a_known_collection(delete_fixture,
     sut.do_delete(str(collection.id))
 
     assert capsys.readouterr().out == f"Error: Could not find a collection with ID: {collection.id} to delete.\n"
+
+@pytest.fixture
+def list_fixture(sut):
+    list_collections_vm1 = ListCollectionsViewModel(str(uuid4()), "foo", False)
+    list_collections_vm2 = ListCollectionsViewModel(str(uuid4()), "bar", False)
+    list_collections_vm3 = ListCollectionsViewModel(str(uuid4()), "baz", False)
+
+    list_return_value = [
+        list_collections_vm1,
+        list_collections_vm2,
+        list_collections_vm3
+    ]
+
+    sut.collection_use_cases.list.return_value = list_return_value
+
+    return sut, list_return_value
+
+def test_do_list(list_fixture, capsys):
+    sut, list_return_value = list_fixture
+    
+    sut.do_list("")
+
+    # Capture the output
+    captured = capsys.readouterr()
+
+    assert f"{list_return_value[0].id} foo" in captured.out
+    assert f"{list_return_value[1].id} bar" in captured.out
+    assert f"{list_return_value[2].id} baz" in captured.out
+
+def test_do_list_prefixes_selected_collection_row_with_an_asterisk(list_fixture, capsys):
+    # Arrange
+    sut, list_return_value = list_fixture
+
+    list_return_value[1].is_selected = True
+
+    # Act
+    sut.do_list("")
+    captured = capsys.readouterr()
+
+    # Assert
+    assert f"* {list_return_value[1].id} bar" in captured.out
+
+def test_do_list_displays_a_header(list_fixture, capsys):
+    # Arrange
+    sut, list_return_value = list_fixture
+
+    # Act
+    sut.do_list("")
+    captured = capsys.readouterr()
+
+    # Assert
+    assert "ID                                     Name" in captured.out
+    assert "----------------------------------------------------" in captured.out
