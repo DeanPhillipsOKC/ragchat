@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 dependency-injector = "*"
-pytest = "*"
-pytest-mock = "*"
 
 [dev-packages]
+pytest = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.9"
