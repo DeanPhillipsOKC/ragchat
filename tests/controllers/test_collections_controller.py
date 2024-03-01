@@ -122,3 +122,55 @@ def test_do_list_displays_a_header(list_fixture, capsys):
     # Assert
     assert "ID                                     Name" in captured.out
     assert "----------------------------------------------------" in captured.out
+
+@pytest.fixture
+def select_fixture(sut):
+    collection = Collection(uuid4(), "Test Collection")
+    sut.collection_use_cases.select.return_value = collection
+
+    return sut, collection    
+
+def test_do_select(select_fixture, capsys):
+    # Arrange
+    sut, collection = select_fixture
+
+    # Act
+    sut.do_select(str(collection.id))
+    captured = capsys.readouterr()
+
+    # Assert
+    f"Selected collection with ID: {str(collection.id)}" == captured.out
+
+def test_do_select_fails_if_no_id_is_provided(select_fixture, capsys):
+    # Arrange
+    sut, collection = select_fixture
+
+    # Act
+    sut.do_select(None)
+    captured = capsys.readouterr()
+
+    # Assert
+    assert f"Error: The 'select' command requires a collection ID.\nUsage: select <ID>\n" == captured.out
+
+def test_do_select_fails_if_id_is_not_a_valid_uuid(select_fixture, capsys):
+    # Arrange
+    sut, collection = select_fixture
+
+    # Act
+    sut.do_select("Not a valid UUID")
+    captured = capsys.readouterr()
+
+    # Assert
+    assert f"Error: The 'select' command requires a valid collection ID (UUID v4)\nUsage: select <ID>\n" == captured.out
+
+def test_do_select_fails_if_id_does_not_match_a_collection_in_the_list(select_fixture, capsys):
+    # Arrange
+    sut, collection = select_fixture
+    sut.collection_use_cases.select.return_value = None
+
+    # Act
+    sut.do_select(str(collection.id))
+    captured = capsys.readouterr()
+
+    # Assert
+    assert f"Error: Could not select the collection with ID: {str(collection.id)}\n" == captured.out 
