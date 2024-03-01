@@ -20,19 +20,27 @@ def add_fixture(sut):
 
     return sut, collection
 
-def test_do_add(add_fixture, capsys):    
+def test_do_add(add_fixture, capsys):
+    # Arrange
     sut, collection = add_fixture
 
+    # Act
     sut.do_add("Test Collection")
+    captured = capsys.readouterr()
 
-    assert capsys.readouterr().out == f"Added a new collection with ID: {str(collection.id)}\n"
+    # Assert
+    assert f"Added a new collection with ID: {str(collection.id)}\n" == captured.out
 
 def test_do_add_fails_if_name_not_provided(add_fixture, capsys):
+    # Arrange
     sut, collection = add_fixture
 
+    # Act
     sut.do_add(None)
+    captured = capsys.readouterr()
 
-    assert capsys.readouterr().out == "Error: The 'add' command requires a name for the new collection.\nUsage: add <name>\n"
+    # Assert
+    assert "Error: The 'add' command requires a name for the new collection.\nUsage: add <name>\n" == captured.out
 
 @pytest.fixture
 def delete_fixture(sut):
@@ -42,33 +50,49 @@ def delete_fixture(sut):
     return sut, collection
 
 def test_do_delete(delete_fixture, capsys):
+    # Arrange
     sut, collection = delete_fixture
 
+    # Act
     sut.do_delete(str(collection.id))
+    captured = capsys.readouterr()
 
-    assert capsys.readouterr().out == f"Deleted colection with ID: {str(collection.id)} and Name: {collection.name}\n"
+    # Assert
+    assert f"Deleted colection with ID: {str(collection.id)} and Name: {collection.name}\n" == captured.out
 
 def test_do_delete_fails_if_id_not_supplied(delete_fixture, capsys):
+    # Arrange
     sut, collection = delete_fixture
 
+    # Act
     sut.do_delete(None)
+    captured = capsys.readouterr()
 
-    assert capsys.readouterr().out == f"Error: The 'delete' command requires a collection ID.\nUsage: delete <ID>\n"
+    # Assert
+    assert f"Error: The 'delete' command requires a collection ID.\nUsage: delete <ID>\n" == captured.out
 
 def test_do_delete_fails_if_id_not_valid(delete_fixture, capsys):
+    # Arrange
     sut, collection = delete_fixture
 
+    # Act
     sut.do_delete("Not a valid UUID")
+    captured = capsys.readouterr()
 
-    assert capsys.readouterr().out == f"Error: The 'delete' command requires a valid collection ID (UUID v4)\nUsage: delete <ID>\n"
+    # Assert
+    assert f"Error: The 'delete' command requires a valid collection ID (UUID v4)\nUsage: delete <ID>\n" == captured.out
 
 def test_do_delete_fails_if_id_does_not_match_a_known_collection(delete_fixture, capsys):
+    # Arrange
     sut, collection = delete_fixture
     sut.collection_use_cases.delete.return_value = None
 
+    # Act
     sut.do_delete(str(collection.id))
+    captured = capsys.readouterr()
 
-    assert capsys.readouterr().out == f"Error: Could not find a collection with ID: {collection.id} to delete.\n"
+    # Assert
+    assert f"Error: Could not find a collection with ID: {collection.id} to delete.\n" == captured.out
 
 @pytest.fixture
 def list_fixture(sut):
@@ -87,13 +111,14 @@ def list_fixture(sut):
     return sut, list_return_value
 
 def test_do_list(list_fixture, capsys):
+    # Arrange
     sut, list_return_value = list_fixture
     
+    # Act
     sut.do_list("")
-
-    # Capture the output
     captured = capsys.readouterr()
 
+    # Assert
     assert f"{list_return_value[0].id} foo" in captured.out
     assert f"{list_return_value[1].id} bar" in captured.out
     assert f"{list_return_value[2].id} baz" in captured.out
