@@ -1,17 +1,24 @@
 from cmd import Cmd
+
+from ragchat.controllers.utilities_controller import UtilitiesController
 from .collections_controller import CollectionsController
 
 class Cli(Cmd):
     intro = 'Welcome to the RAGChat.  Type help or ? to list commands.\n'
     prompt = ">>>"
 
-    def __init__(self, collections_controller: CollectionsController):
+    def __init__(self, collections_controller: CollectionsController, utilities_controller: UtilitiesController):
         super().__init__()
         self.collections_controller = collections_controller
+        self.utilities_controller = utilities_controller
 
     def do_collections(self, arg):
         """Enter collections management mode."""
         self.collections_controller.cmdloop()
+
+    def do_utilities(self, arg):
+        """Enter utilities mode."""
+        self.utilities_controller.cmdloop()
 
     def do_exit(self, arg):
         """Exit the CLI"""

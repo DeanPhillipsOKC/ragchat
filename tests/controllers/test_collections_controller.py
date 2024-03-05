@@ -15,7 +15,7 @@ def sut(mock_use_cases):
 
 @pytest.fixture
 def add_fixture(sut):
-    collection = Collection(uuid4(), "Test Collection")
+    collection = Collection(id=uuid4(), name="Test Collection")
     sut.collection_use_cases.add.return_value = collection
 
     return sut, collection
@@ -44,7 +44,7 @@ def test_do_add_fails_if_name_not_provided(add_fixture, capsys):
 
 @pytest.fixture
 def delete_fixture(sut):
-    collection = Collection(uuid4(), "Test Collection")
+    collection = Collection(id=uuid4(), name="Test Collection")
     sut.collection_use_cases.delete.return_value = collection
 
     return sut, collection
@@ -150,7 +150,7 @@ def test_do_list_displays_a_header(list_fixture, capsys):
 
 @pytest.fixture
 def select_fixture(sut):
-    collection = Collection(uuid4(), "Test Collection")
+    collection = Collection(id=uuid4(), name="Test Collection")
     sut.collection_use_cases.select.return_value = collection
 
     return sut, collection    

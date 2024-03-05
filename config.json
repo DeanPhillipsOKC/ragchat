@@ -1,0 +1,5 @@
+{
+    "entity_db_config": {
+        "path": ".databases/entities.db"
+    }
+}
