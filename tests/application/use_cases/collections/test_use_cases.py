@@ -32,7 +32,7 @@ def test_add_a_new_collection_fails_if_name_is_not_provided(setup):
 def delete_collection_fixture(setup):
     repository, sut = setup
 
-    collection = Collection(uuid4(), "Test")
+    collection = Collection(id=uuid4(), name="Test")
     repository._collections[collection.id] = collection
 
     return repository, sut, collection
@@ -60,8 +60,8 @@ def test_delete_a_collection_fails_if_id_is_invalid(delete_collection_fixture):
 def test_list_collections(setup):
     repository, sut = setup
 
-    collection1 = Collection(uuid4(), "Test1")
-    collection2 = Collection(uuid4(), "test2")
+    collection1 = Collection(id=uuid4(), name="Test1")
+    collection2 = Collection(id=uuid4(), name="test2")
 
     repository._collections[collection1.id] = collection1
     repository._collections[collection2.id] = collection2
@@ -83,8 +83,8 @@ def test_list_collections(setup):
 def select_collection_fixture(setup):
     repository, sut = setup
 
-    collection1 = Collection(uuid4(), "Test1")
-    collection2 = Collection(uuid4(), "Test2")
+    collection1 = Collection(id=uuid4(), name="Test1")
+    collection2 = Collection(id=uuid4(), name="Test2")
 
     repository._collections[collection1.id] = collection1
     repository._collections[collection2.id] = collection2
