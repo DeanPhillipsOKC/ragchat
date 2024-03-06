@@ -1,5 +1,6 @@
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict
+
+from pydantic import ConfigDict
 from ragchat.domain.kernel.entity import Entity
 
 class Collection(Entity):
