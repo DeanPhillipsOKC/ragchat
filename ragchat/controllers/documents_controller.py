@@ -3,53 +3,32 @@ from uuid import uuid4
 
 from ragchat.domain.documents.document import Document
 
+
 class DocumentsController(Cmd):
-    
-    def do_add_from_url(self, arg):
+
+    def do_add(self, arg):
         """
-        Add a new document using a URL.
+        Add a new document using a local path, or remote URL.
 
-        Usage: add_from_url <URL>
+        Usage: add <path|URL>
 
-        <URL> specifies a remote URL to a file, or document.
+        <path> Specifies a path to a local file.
+        <URL> Specifies a remote URL to a file, or document.
         """
         if not arg:
-            print("Error: The 'add_from_url' command requires a URL.")
-            print("Usage: add_from_url <URL>")
+            print("Error: The 'add' command requires a path or URL.")
+            print("Usage: add <path|URL>")
             return
 
         document = any
         try:
-            document = Document(id=uuid4(), loaded_from_url=arg)
+            document = Document(id=uuid4(), source=arg)
         except:
-            print("The 'add_from_url' command requires a valid URL")
-            print("Usage: add_from_url <URL>")
+            print("The 'add' command requires a valid path or URL.")
+            print("Usage: add <path|URL>")
             return
 
-        print(f"Added a new document with URL: {arg}")
-
-    def do_add_from_path(self, arg):
-        """
-        Add a new document using a path.
-
-        Usage: add_from_path <path>
-
-        <path> specifies a local path to a file.
-        """
-        if not arg:
-            print("Error: The 'add_from_path' command requires a path.")
-            print("Usage: add_from_path <path>")
-            return
-
-        document = any
-        try:
-            document = Document(id=uuid4(), loaded_from_path=arg)
-        except:
-            print("The 'add_from_path' command requires a valid path")
-            print("Usage: add_from_path <path>")
-            return
-
-        print(f"Added a new document with path: {arg}")
+        print(f"Added a new document with source: {arg}")
 
     def do_exit(self, arg):
         """Exit the document management command mode."""

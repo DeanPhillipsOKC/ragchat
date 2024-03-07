@@ -9,11 +9,11 @@ def test_can_load_from_url():
     url = "https://www.google.com/"
 
     # Act
-    doc = Document(id=id, loaded_from_url=url)
+    doc = Document(id=id, source=url)
 
     # Assert 
     assert doc.id == id, "The document ID was not set correctly."
-    assert str(doc.loaded_from_url) == url, "The document loaded by URL was not set correctly."
+    assert str(doc.source) == url, "The document loaded by URL was not set correctly."
 
 def test_can_load_from_path():
     # Arrange
@@ -21,11 +21,11 @@ def test_can_load_from_path():
     path = __file__
 
     # Act
-    doc = Document(id=id, loaded_from_path=path)
+    doc = Document(id=id, source=path)
 
     # Assert
     assert doc.id == id, "The document ID was not set correctly."
-    assert str(doc.loaded_from_path) == path, "The document loaded by path was not set correctly."
+    assert str(doc.source) == path, "The document loaded by path was not set correctly."
 
 def test_cannot_load_from_invalid_path():
     # Arrange
@@ -34,7 +34,7 @@ def test_cannot_load_from_invalid_path():
 
     # Act / Assert
     with pytest.raises(ValueError):
-        Document(id=id, loaded_from_path=path)
+        Document(id=id, source=path)
 
 def test_cannot_load_from_invalid_url():
     # Arrange
@@ -43,4 +43,4 @@ def test_cannot_load_from_invalid_url():
 
     # Act / Assert
     with pytest.raises(ValueError):
-        Document(id=id, loaded_from_url=url)
+        Document(id=id, source=url)
