@@ -28,6 +28,29 @@ class DocumentsController(Cmd):
 
         print(f"Added a new document with URL: {arg}")
 
+    def do_add_from_path(self, arg):
+        """
+        Add a new document using a path.
+
+        Usage: add_from_path <path>
+
+        <path> specifies a local path to a file.
+        """
+        if not arg:
+            print("Error: The 'add_from_path' command requires a path.")
+            print("Usage: add_from_path <path>")
+            return
+
+        document = any
+        try:
+            document = Document(id=uuid4(), loaded_from_path=arg)
+        except:
+            print("The 'add_from_path' command requires a valid path")
+            print("Usage: add_from_path <path>")
+            return
+
+        print(f"Added a new document with path: {arg}")
+
     def do_exit(self, arg):
         """Exit the document management command mode."""
         print("Exiting document management mode...")
