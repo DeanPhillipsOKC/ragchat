@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 dependency-injector = "*"
 pydantic = "*"
+magika = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"

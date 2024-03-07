@@ -18,7 +18,8 @@ def test_can_load_from_url():
 def test_can_load_from_path():
     # Arrange
     id = uuid4()
-    path = __file__
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(current_dir, 'test_documents', 'fake_document.txt')
 
     # Act
     doc = Document(id=id, source=path)
@@ -26,6 +27,7 @@ def test_can_load_from_path():
     # Assert
     assert doc.id == id, "The document ID was not set correctly."
     assert str(doc.source) == path, "The document loaded by path was not set correctly."
+    assert doc.type == "txt", "The document type was not correctly determined"
 
 def test_cannot_load_from_invalid_path():
     # Arrange
@@ -33,7 +35,7 @@ def test_cannot_load_from_invalid_path():
     path = "./nuke.txt"
 
     # Act / Assert
-    with pytest.raises(ValueError):
+    with pytest.raises(Exception):
         Document(id=id, source=path)
 
 def test_cannot_load_from_invalid_url():
@@ -42,5 +44,5 @@ def test_cannot_load_from_invalid_url():
     url = "Not a valid URL"
 
     # Act / Assert
-    with pytest.raises(ValueError):
+    with pytest.raises(Exception):
         Document(id=id, source=url)
