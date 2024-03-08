@@ -14,7 +14,7 @@ def test_can_load_from_url():
     # Assert 
     assert doc.id == id, "The document ID was not set correctly."
     assert str(doc.source) == url, "The document loaded by URL was not set correctly."
-    assert doc.content != None
+    assert doc.content != None, "The document did not load the content."
 
 def test_can_load_from_path():
     # Arrange
@@ -27,6 +27,7 @@ def test_can_load_from_path():
     # Assert
     assert doc.id == id, "The document ID was not set correctly."
     assert str(doc.source) == path, "The document loaded by path was not set correctly."
+    assert doc.content != None, "The document did not load the content."
 
 def test_cannot_load_from_invalid_path():
     # Arrange
