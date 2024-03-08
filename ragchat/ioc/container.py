@@ -7,6 +7,7 @@ from ragchat.application.use_cases.collections.use_cases import CollectionsUseCa
 from ragchat.controllers.cli import CollectionsController
 from ragchat.controllers.cli import Cli
 from ragchat.data.collections.sqlite_repository import SqLiteCollectionRepository
+from ragchat.data.documents.in_memory_repository import InMemoryDocumentRepository
 
 
 class Container(containers.DeclarativeContainer):
@@ -14,6 +15,10 @@ class Container(containers.DeclarativeContainer):
 
     collection_repository_factory = providers.Factory(
         SqLiteCollectionRepository, config_provider
+    )
+
+    document_repository_factory = providers.Factory(
+        InMemoryDocumentRepository
     )
 
     collection_use_cases_factory = providers.Factory(
