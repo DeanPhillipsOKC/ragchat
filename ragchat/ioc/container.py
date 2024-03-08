@@ -2,7 +2,7 @@ from dependency_injector import containers, providers
 from ragchat.application.config.config_provider import ConfigProvider
 from ragchat.controllers.documents_controller import DocumentsController
 from ragchat.controllers.utilities_controller import UtilitiesController
-from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
+from ragchat.application.use_cases.collections import CollectionsUseCases
 from ragchat.controllers.cli import CollectionsController
 from ragchat.controllers.cli import Cli
 from ragchat.data.collections import SqLiteCollectionRepository

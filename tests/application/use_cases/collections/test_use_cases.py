@@ -1,7 +1,6 @@
 from uuid import uuid4
 import pytest
-from ragchat.application.use_cases.collections.dtos import ListCollectionsViewModel
-from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
+from ragchat.application.use_cases.collections import ListCollectionsViewModel, CollectionsUseCases
 from ragchat.common.exceptions.entity_not_found_exception import EntityNotFoundException
 from ragchat.common.guid_utilities import is_uuid4
 from ragchat.data.collections import InMemoryCollectionRepository

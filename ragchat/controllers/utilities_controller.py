@@ -1,7 +1,7 @@
 from cmd import Cmd
 import os
 from ragchat.application.config.config_provider import ConfigProvider
-from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
+from ragchat.application.use_cases.collections import CollectionsUseCases
 from ragchat.common.guid_utilities import is_uuid4, to_uuid4
 
 class UtilitiesController(Cmd):

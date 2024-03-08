@@ -1,5 +1,5 @@
 from cmd import Cmd
-from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
+from ragchat.application.use_cases.collections import CollectionsUseCases
 from ragchat.common.guid_utilities import is_uuid4, to_uuid4
 
 class CollectionsController(Cmd):
