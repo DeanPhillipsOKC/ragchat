@@ -14,6 +14,7 @@ def test_can_load_from_url():
     # Assert 
     assert doc.id == id, "The document ID was not set correctly."
     assert str(doc.source) == url, "The document loaded by URL was not set correctly."
+    assert doc.content != None
 
 def test_can_load_from_path():
     # Arrange
@@ -62,7 +63,7 @@ def test_can_identify_pdfs():
 def test_can_identify_html():
     # Arrange
     id = uuid4()
-    url = "https://www.google.com/"
+    url = "https://www.sanity.io/static-websites"
 
     # Act
     doc = Document(id=id, source=url)

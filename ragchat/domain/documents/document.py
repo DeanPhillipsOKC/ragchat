@@ -1,35 +1,40 @@
-import requests
+from pydantic import BaseModel, root_validator, HttpUrl, FilePath
 from typing import Optional, Union
-from uuid import UUID
-from pydantic import BaseModel, ConfigDict, validator, FilePath
-from ragchat.domain.kernel.entity import Entity
-from magika import Magika
+import requests
 import re
 
+def is_html(content: bytes) -> bool:
+    content_sample = content[:500].lower()  # Check the beginning of the content
+    return b'<!doctype html' in content_sample or b'<html' in content_sample
 
-def is_url(string: str) -> bool:
-    # Simple regex for demonstration; consider using a more robust solution for production
-    return re.match(r"https?://", string) is not None
+def is_url(source: str) -> bool:
+    return re.match(r'https?://', source)
 
-
-class Document(Entity):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: UUID
-    source: Optional[Union[str, FilePath]] = None
+class Document(BaseModel):
+    id: str
+    source: Optional[Union[HttpUrl, FilePath]] = None
     type: Optional[str] = None
+    content: Optional[bytes] = None
 
-    @validator("type", always=True)
-    def set_type(cls, v, values, **kwargs):
-        source = values.get("source")
+    @root_validator
+    def load_and_identify_content(cls, values):
+        source = values.get('source')
         if source:
-            if is_url(source):
+            content = None
+            if is_url(str(source)):  # Check if source is a URL
                 response = requests.get(source)
                 content = response.content
-            else:  # source is assumed to be a FilePath
+            else:  # Assume source is a FilePath
                 with open(source, "rb") as f:
                     content = f.read()
-            magika = Magika()
-            file_type = magika.identify_bytes(content)
-            return file_type.output.ct_label
-        return v
+
+            # Check if the content is HTML
+            if is_html(content):
+                file_type = 'html'
+            else:
+                # Placeholder for using Magika or other type identification logic
+                file_type = 'unknown'  # Modify this line with actual identification logic
+
+            values['content'] = content
+            values['type'] = file_type
+        return values
