@@ -5,7 +5,7 @@ from ragchat.domain.documents.document import Document
 
 def test_can_load_from_url():
     # Arrange
-    id = uuid4()
+    id = str(uuid4())
     url = "https://www.google.com/"
 
     # Act
@@ -18,7 +18,7 @@ def test_can_load_from_url():
 
 def test_can_load_from_path():
     # Arrange
-    id = uuid4()
+    id = str(uuid4())
     path = __file__
 
     # Act
@@ -31,7 +31,7 @@ def test_can_load_from_path():
 
 def test_cannot_load_from_invalid_path():
     # Arrange
-    id = uuid4()
+    id = str(uuid4())
     path = "./nuke.txt"
 
     # Act / Assert
@@ -40,7 +40,7 @@ def test_cannot_load_from_invalid_path():
 
 def test_cannot_load_from_invalid_url():
     # Arrange
-    id = uuid4()
+    id = str(uuid4())
     url = "Not a valid URL"
 
     # Act / Assert
@@ -49,7 +49,7 @@ def test_cannot_load_from_invalid_url():
 
 def test_can_identify_pdfs():
     # Arrange
-    id = uuid4()
+    id = str(uuid4())
     current_dir = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(current_dir, 'test_documents', 'sample_pdf.pdf')
 
@@ -63,7 +63,7 @@ def test_can_identify_pdfs():
 
 def test_can_identify_html():
     # Arrange
-    id = uuid4()
+    id = str(uuid4())
     url = "https://www.sanity.io/static-websites"
 
     # Act

@@ -22,8 +22,8 @@ class DocumentsController(Cmd):
 
         document = any
         try:
-            document = Document(id=uuid4(), source=arg)
-        except:
+            document = Document(id=str(uuid4()), source=arg)
+        except Exception as e:
             print("The 'add' command requires a valid path or URL.")
             print("Usage: add <path|URL>")
             return

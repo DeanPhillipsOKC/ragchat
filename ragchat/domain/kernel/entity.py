@@ -5,6 +5,8 @@ from pydantic import BaseModel, ConfigDict
 
 
 class Entity(BaseModel, ABC):
+    model_config = ConfigDict(from_attributes=True, frozen=True)
+
     id: UUID
 
     def __hash__(self) -> int:
@@ -15,9 +17,3 @@ class Entity(BaseModel, ABC):
         # Two instances are considered equal if they are of the same type and have the same `id`
         if isinstance(other, type(self)):
             return self.id == other.id
-        return False
-    
-    class Config:
-        # This makes Pydantic models behave as if they were immutable,
-        # which is a requirement for instances to be hashable.
-        frozen = True

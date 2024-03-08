@@ -1,7 +1,8 @@
-from pydantic import BaseModel, root_validator, HttpUrl, FilePath
+from pydantic import BaseModel, HttpUrl, FilePath, model_validator
 from typing import Optional, Union
 import requests
 import re
+from magika import Magika
 
 def is_html(content: bytes) -> bool:
     content_sample = content[:500].lower()  # Check the beginning of the content
@@ -16,25 +17,26 @@ class Document(BaseModel):
     type: Optional[str] = None
     content: Optional[bytes] = None
 
-    @root_validator
-    def load_and_identify_content(cls, values):
-        source = values.get('source')
-        if source:
+    @model_validator(mode='after')
+    def load_and_identify_content(self):
+        if self.source:
             content = None
-            if is_url(str(source)):  # Check if source is a URL
-                response = requests.get(source)
+            src = self.source
+            if is_url(str(src)):  # Check if source is a URL
+                response = requests.get(src)
                 content = response.content
             else:  # Assume source is a FilePath
-                with open(source, "rb") as f:
+                with open(src, "rb") as f:
                     content = f.read()
 
             # Check if the content is HTML
             if is_html(content):
                 file_type = 'html'
             else:
-                # Placeholder for using Magika or other type identification logic
-                file_type = 'unknown'  # Modify this line with actual identification logic
+                magica = Magika()
+                result = magica.identify_bytes(content)
+                file_type = result.output.ct_label
 
-            values['content'] = content
-            values['type'] = file_type
-        return values
+            self.content = content
+            self.type = file_type
+        return self
