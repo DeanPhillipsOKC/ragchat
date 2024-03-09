@@ -2,7 +2,7 @@ import os
 import sqlite3
 from uuid import UUID
 from ragchat.application.config import ConfigProvider
-from ragchat.data.kernel.sqlite_repository import SqLiteRepository
+from ragchat.data.kernel import SqLiteRepository
 from ragchat.domain.collections.collection import Collection
 from ragchat.domain.collections.repository_interface import (
     ICollectionRepository,
@@ -86,8 +86,10 @@ class SqLiteCollectionRepository(ICollectionRepository, SqLiteRepository):
                 selected_id = "selected"
                 # Upsert into selected_collection
                 cursor.execute(
-                    "INSERT OR REPLACE INTO selected_collection (id, collection_id) "
-                    "VALUES (?, ?)", (selected_id, str(guid)), )
+                    "INSERT OR REPLACE INTO selected_collection "
+                    "(id, collection_id) VALUES (?, ?)",
+                    (selected_id, str(guid)),
+                )
                 conn.commit()
                 return self._row_to_entity(row, Collection)
             else:
@@ -97,8 +99,10 @@ class SqLiteCollectionRepository(ICollectionRepository, SqLiteRepository):
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT collections.* FROM collections JOIN selected_collection "
-                "ON collections.id = selected_collection.collection_id")
+                "SELECT collections.* FROM collections JOIN "
+                "selected_collection ON collections.id = "
+                "selected_collection.collection_id"
+            )
             row = cursor.fetchone()
             if row:
                 return self._row_to_entity(row, Collection)
