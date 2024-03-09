@@ -6,8 +6,12 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
-  - repo: https://github.com/hhatto/autopep8
-    rev: v2.0.4  # Use the latest version
+  - repo: https://github.com/psf/black
+    rev: 24.2.0  # Use the latest version
     hooks:
-      - id: autopep8
-        args: ["--global-config", "autopep8.config"]
+      - id: black
+        language_version: python3
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0  # Use the latest version
+    hooks:
+      - id: flake8
