@@ -1,8 +1,9 @@
 from cmd import Cmd
-from ragchat.controllers.documents_controller import DocumentsController
-
-from ragchat.controllers.utilities_controller import UtilitiesController
-from .collections_controller import CollectionsController
+from ragchat.controllers import (
+    DocumentsController,
+    UtilitiesController,
+    CollectionsController,
+)
 
 
 class Cli(Cmd):

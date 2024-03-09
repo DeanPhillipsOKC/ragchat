@@ -1,6 +1,6 @@
 import pytest
 
-from ragchat.controllers.documents_controller import DocumentsController
+from ragchat.controllers import DocumentsController
 
 
 @pytest.fixture
@@ -16,8 +16,10 @@ def test_do_exit(sut, capsys):
     captured = capsys.readouterr()
 
     # Assert
-    assert result, "do_exit must return True in order to exit to the previous menu."
-    assert f"Exiting document management mode...\n" == captured.out
+    assert (
+        result
+    ), "do_exit must return True in order to exit to the previous menu."
+    assert "Exiting document management mode...\n" == captured.out
 
 
 def test_do_add_using_url(sut, capsys):
@@ -25,11 +27,14 @@ def test_do_add_using_url(sut, capsys):
     url = "https://www.google.com"
 
     # Act
-    result = sut.do_add(url)
+    sut.do_add(url)
     captured = capsys.readouterr()
 
     # Assert
-    assert f"Added a new document with source: https://www.google.com\n" == captured.out
+    assert (
+        "Added a new document with source: https://www.google.com\n"
+        == captured.out
+    )
 
 
 def test_do_add_fails_if_url_not_valid(sut, capsys):
@@ -37,22 +42,25 @@ def test_do_add_fails_if_url_not_valid(sut, capsys):
     url = "NotValidUrl"
 
     # Act
-    result = sut.do_add(url)
+    sut.do_add(url)
     captured = capsys.readouterr()
 
     # Assert
     assert (
-        f"The 'add' command requires a valid path or URL.\nUsage: add <path|URL>\n"
-        == captured.out
+        "The 'add' command requires a valid path or URL."
+        "\nUsage: add <path|URL>\n" == captured.out
     )
 
 
 def test_do_add_using_path(sut, capsys):
     # Arrange
-    path = __file__  # Document validator needs a path that points to a file so just use this test script.
+
+    # Document validator needs a path that points to
+    # a file so just use this test script.
+    path = __file__
 
     # Act
-    result = sut.do_add(path)
+    sut.do_add(path)
     captured = capsys.readouterr()
 
     # Assert
@@ -64,11 +72,11 @@ def test_do_add_fails_if_path_not_valid(sut, capsys):
     path = "NotValidPath"
 
     # Act
-    result = sut.do_add(path)
+    sut.do_add(path)
     captured = capsys.readouterr()
 
     # Assert
     assert (
-        f"The 'add' command requires a valid path or URL.\nUsage: add <path|URL>\n"
-        == captured.out
+        "The 'add' command requires a valid path or URL."
+        "\nUsage: add <path|URL>\n" == captured.out
     )

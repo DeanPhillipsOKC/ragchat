@@ -5,7 +5,7 @@ from ragchat.application.use_cases.collections import (
     CollectionsUseCases,
 )
 from ragchat.common.exceptions import EntityNotFoundException
-from ragchat.common.guid_utilities import is_uuid4
+from ragchat.common import is_uuid4
 from ragchat.data.collections import InMemoryCollectionRepository
 from ragchat.domain.collections.collection import Collection
 

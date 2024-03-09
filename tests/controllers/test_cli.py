@@ -1,7 +1,5 @@
 import pytest
-from ragchat.controllers.cli import (
-    Cli,
-)  # Adjust the import path according to your project structure
+from ragchat.controllers import Cli
 
 
 @pytest.fixture

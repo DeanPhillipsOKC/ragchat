@@ -1,7 +1,7 @@
 from uuid import uuid4
 import pytest
 from ragchat.application.use_cases.documents.use_cases import DocumentsUseCases
-from ragchat.common.guid_utilities import is_uuid4
+from ragchat.common import is_uuid4
 
 from ragchat.data.documents.in_memory_repository import (
     InMemoryDocumentRepository,
