@@ -1,8 +1,11 @@
-from ragchat.common.exceptions.entity_not_found_exception import EntityNotFoundException
-from ragchat.domain.collections.repository_interface import ICollectionRepository
+from ragchat.common.exceptions import EntityNotFoundException
+from ragchat.domain.collections.repository_interface import (
+    ICollectionRepository,
+)
 from ragchat.domain.collections.collection import Collection
 from .dtos import ListCollectionsViewModel
 from uuid import UUID, uuid4
+
 
 class CollectionsUseCases:
     def __init__(self, repository: ICollectionRepository):
@@ -10,7 +13,9 @@ class CollectionsUseCases:
 
     def add(self, name: str) -> Collection:
         if not name:
-            raise ValueError("In order to add a new collection, a name must be provided.")
+            raise ValueError(
+                "In order to add a new collection, a name must be provided."
+            )
 
         # Logic to add a collection
         collection = Collection(id=uuid4(), name=name)
@@ -19,7 +24,9 @@ class CollectionsUseCases:
 
     def delete(self, id: UUID) -> Collection:
         if not id:
-            raise ValueError("In order to delete a collection, an ID must be provided.")
+            raise ValueError(
+                "In order to delete a collection, an ID must be provided."
+            )
 
         deleted_collection = self.repository.delete(id)
 
@@ -34,16 +41,19 @@ class CollectionsUseCases:
 
         return [
             ListCollectionsViewModel(
-                id=str(collection.id), 
-                name=collection.name, 
-                is_selected=
-                    selected_collection != None and collection.id == selected_collection.id
-            ) for collection in collections
+                id=str(collection.id),
+                name=collection.name,
+                is_selected=selected_collection is not None
+                and collection.id == selected_collection.id,
+            )
+            for collection in collections
         ]
-    
+
     def select(self, id: UUID) -> Collection:
         if not id:
-            raise ValueError("In order to select a collection, an ID must be provided.")
+            raise ValueError(
+                "In order to select a collection, an ID must be provided."
+            )
 
         selected_collection = self.repository.select(id)
 
@@ -51,4 +61,3 @@ class CollectionsUseCases:
             raise EntityNotFoundException(id)
 
         return selected_collection
-        
