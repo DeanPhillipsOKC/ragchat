@@ -1,9 +1,10 @@
 from abc import ABC
 import json
 from typing import Generic, Type, TypeVar
-from ragchat.domain.kernel.entity import Entity
+from ragchat.domain.kernel import Entity
 
-T = TypeVar('T', bound=Entity)
+T = TypeVar("T", bound=Entity)
+
 
 class SqLiteRepository(ABC, Generic[T]):
     def _entity_to_row(self, entity: T) -> tuple:
