@@ -6,8 +6,8 @@ from ragchat.application.use_cases.collections import (
 )
 from ragchat.common.exceptions import EntityNotFoundException
 from ragchat.common import is_uuid4
-from ragchat.data.collections import InMemoryCollectionRepository
-from ragchat.domain.collections.collection import Collection
+from ragchat.data import InMemoryCollectionRepository
+from ragchat.domain.collections import Collection
 
 
 @pytest.fixture

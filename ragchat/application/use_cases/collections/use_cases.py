@@ -1,8 +1,5 @@
 from ragchat.common.exceptions import EntityNotFoundException
-from ragchat.domain.collections.repository_interface import (
-    ICollectionRepository,
-)
-from ragchat.domain.collections.collection import Collection
+from ragchat.domain.collections import ICollectionRepository, Collection
 from .dtos import ListCollectionsViewModel
 from uuid import UUID, uuid4
 

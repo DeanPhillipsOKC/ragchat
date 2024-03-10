@@ -1,16 +1,16 @@
 from uuid import UUID
-from ragchat.domain.collections.repository_interface import ICollectionRepository
-from ragchat.domain.collections.collection import Collection
+from ragchat.domain.collections import ICollectionRepository, Collection
+
 
 class InMemoryCollectionRepository(ICollectionRepository):
     _selected_collection_id = None
 
     def __init__(self):
         self._collections = {}
-    
+
     def add(self, collection):
         self._collections[collection.id] = collection
-    
+
     def delete(self, guid: UUID) -> Collection:
         if guid in self._collections:
             return self._collections.pop(guid)
@@ -29,6 +29,8 @@ class InMemoryCollectionRepository(ICollectionRepository):
 
     def get_selected(self) -> Collection:
         if InMemoryCollectionRepository._selected_collection_id:
-            return self._collections[InMemoryCollectionRepository._selected_collection_id]
+            return self._collections[
+                InMemoryCollectionRepository._selected_collection_id
+            ]
         else:
             return None

@@ -3,10 +3,7 @@ import sqlite3
 from uuid import UUID
 from ragchat.application.config import ConfigProvider
 from ragchat.data.kernel import SqLiteRepository
-from ragchat.domain.collections.collection import Collection
-from ragchat.domain.collections.repository_interface import (
-    ICollectionRepository,
-)
+from ragchat.domain.collections import ICollectionRepository, Collection
 
 
 class SqLiteCollectionRepository(ICollectionRepository, SqLiteRepository):

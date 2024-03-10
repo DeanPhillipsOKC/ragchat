@@ -7,10 +7,7 @@ from ragchat.controllers import (
     CollectionsController,
 )
 from ragchat.application.use_cases.collections import CollectionsUseCases
-from ragchat.data.collections import SqLiteCollectionRepository
-from ragchat.data.documents.in_memory_repository import (
-    InMemoryDocumentRepository,
-)
+from ragchat.data import SqLiteCollectionRepository, InMemoryDocumentRepository
 
 
 class Container(containers.DeclarativeContainer):
