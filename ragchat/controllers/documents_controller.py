@@ -1,7 +1,7 @@
 from cmd import Cmd
 from uuid import uuid4
 
-from ragchat.domain.documents.document import Document
+from ragchat.domain.documents import Document
 
 
 class DocumentsController(Cmd):
@@ -20,10 +20,9 @@ class DocumentsController(Cmd):
             print("Usage: add <path|URL>")
             return
 
-        document = any
         try:
-            document = Document(id=str(uuid4()), source=arg)
-        except Exception as e:
+            Document(id=str(uuid4()), source=arg)
+        except Exception:
             print("The 'add' command requires a valid path or URL.")
             print("Usage: add <path|URL>")
             return

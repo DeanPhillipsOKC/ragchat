@@ -4,7 +4,7 @@ from ragchat.application.use_cases.documents.use_cases import DocumentsUseCases
 from ragchat.common import is_uuid4
 
 from ragchat.data.documents import InMemoryDocumentRepository
-from ragchat.domain.documents.document import Document
+from ragchat.domain.documents import Document
 
 
 @pytest.fixture

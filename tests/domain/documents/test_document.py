@@ -1,7 +1,7 @@
 from uuid import uuid4
 import pytest
 import os
-from ragchat.domain.documents.document import Document
+from ragchat.domain.documents import Document
 
 
 def test_can_load_from_url():
