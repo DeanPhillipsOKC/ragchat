@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from ragchat.domain.kernel import Entity
+from ragchat.domain import Entity
 
 
 class _TestEntity(Entity):

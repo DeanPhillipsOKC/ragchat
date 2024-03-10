@@ -5,7 +5,7 @@ from ragchat.application.use_cases.collections import (
     CollectionsUseCases,
 )
 from ragchat.controllers import CollectionsController
-from ragchat.domain.collections import Collection
+from ragchat.domain import Collection
 
 
 @pytest.fixture

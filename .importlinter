@@ -1,0 +1,10 @@
+[importlinter]
+root_package = ragchat
+
+[importlinter:contract:controllers]
+name = controllers should not depend on lower level dependencies
+type = forbidden
+source_modules =
+    ragchat.controllers
+forbidden_modules =
+    ragchat.data

@@ -1,5 +1,5 @@
 from uuid import UUID
-from ragchat.domain.documents.repository_interface import (
+from ragchat.domain import (
     IDocumentRepository,
     Document,
 )

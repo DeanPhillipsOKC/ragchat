@@ -1,7 +1,7 @@
 from cmd import Cmd
 from uuid import uuid4
 
-from ragchat.domain.documents import Document
+from ragchat.domain import Document
 
 
 class DocumentsController(Cmd):

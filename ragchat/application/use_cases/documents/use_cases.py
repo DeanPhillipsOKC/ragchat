@@ -1,6 +1,6 @@
 from typing import List
 from uuid import UUID, uuid4
-from ragchat.domain.documents import Document, IDocumentRepository
+from ragchat.domain import Document, IDocumentRepository
 
 
 class DocumentsUseCases:
