@@ -8,3 +8,22 @@ source_modules =
     ragchat.controllers
 forbidden_modules =
     ragchat.data
+
+[importlinter:contract:application]
+name = application should not depend on lower level dependencies
+type = forbidden
+source_modules =
+    ragchat.application
+forbidden_modules =
+    ragchat.data
+    ragchat.controllers
+
+[importlinter:contract:domain]
+name = domain should not depend on anything
+type = forbidden
+source_modules =
+    ragchat.domain
+forbidden_modules =
+    ragchat.data
+    ragchat.controllers
+    ragchat.application

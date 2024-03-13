@@ -1,6 +1,6 @@
 from cmd import Cmd
 import os
-from ragchat.application.config import ConfigProvider
+from ragchat.config import ConfigProvider
 
 
 class UtilitiesController(Cmd):

@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from ragchat.domain import Entity
+from ragchat.domain.kernel import Entity
 
 
 class Collection(Entity):

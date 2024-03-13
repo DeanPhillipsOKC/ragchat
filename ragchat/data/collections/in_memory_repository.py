@@ -1,5 +1,5 @@
 from uuid import UUID
-from ragchat.domain import ICollectionRepository, Collection
+from ragchat.domain.collections import ICollectionRepository, Collection
 
 
 class InMemoryCollectionRepository(ICollectionRepository):

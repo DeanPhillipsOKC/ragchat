@@ -1,7 +1,6 @@
 from cmd import Cmd
-from ragchat.application.use_cases.collections import CollectionsUseCases
+from ragchat.application.collections.use_cases import CollectionsUseCases
 from ragchat.common import is_uuid4, to_uuid4
-from data import InMemoryDocumentRepository
 
 
 class CollectionsController(Cmd):
@@ -12,8 +11,6 @@ class CollectionsController(Cmd):
     def __init__(self, collection_use_cases: CollectionsUseCases):
         super().__init__()
         self.collection_use_cases = collection_use_cases
-        repo = InMemoryDocumentRepository()
-        print(repo)
 
     def _validate_id(self, id: str, command_name: str) -> bool:
         if not id:
@@ -73,7 +70,7 @@ class CollectionsController(Cmd):
         if deleted_collection:
             print(
                 f"Deleted colection with ID: {deleted_collection.id} "
-                "and Name: {deleted_collection.name}"
+                f"and Name: {deleted_collection.name}"
             )
         else:
             print(

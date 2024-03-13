@@ -1,11 +1,9 @@
 from uuid import uuid4
 import pytest
-from ragchat.application.use_cases.collections import (
-    ListCollectionsViewModel,
-    CollectionsUseCases,
-)
-from ragchat.controllers import CollectionsController
-from ragchat.domain import Collection
+from ragchat.application.collections.dtos import ListCollectionsViewModel
+from ragchat.application.collections.use_cases import CollectionsUseCases
+from ragchat.controllers.collections import CollectionsController
+from ragchat.domain.collections import Collection
 
 
 @pytest.fixture
@@ -75,7 +73,7 @@ def test_do_delete(delete_fixture, capsys):
     # Assert
     assert (
         f"Deleted colection with ID: {str(collection.id)} and "
-        "Name: {collection.name}\n" == captured.out
+        f"Name: {collection.name}\n" == captured.out
     )
 
 

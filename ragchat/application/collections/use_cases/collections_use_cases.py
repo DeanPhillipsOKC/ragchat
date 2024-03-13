@@ -1,6 +1,6 @@
 from ragchat.common.exceptions import EntityNotFoundException
-from ragchat.domain import ICollectionRepository, Collection
-from .dtos import ListCollectionsViewModel
+from ragchat.domain.collections import ICollectionRepository, Collection
+from ragchat.application.collections.dtos import ListCollectionsViewModel
 from uuid import UUID, uuid4
 
 
@@ -22,7 +22,7 @@ class CollectionsUseCases:
     def delete(self, id: UUID) -> Collection:
         if not id:
             raise ValueError(
-                "In order to delete a collection, an ID must be provided."
+                "In order to delete a collection, an ID must be " "provided."
             )
 
         deleted_collection = self.repository.delete(id)
@@ -49,7 +49,7 @@ class CollectionsUseCases:
     def select(self, id: UUID) -> Collection:
         if not id:
             raise ValueError(
-                "In order to select a collection, an ID must be provided."
+                "In order to select a collection, an ID must be " "provided."
             )
 
         selected_collection = self.repository.select(id)

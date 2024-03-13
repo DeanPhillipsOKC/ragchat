@@ -1,6 +1,6 @@
 import json
 
-from ragchat.data import EntityDbConfig
+from ragchat.config.entity_db import EntityDbConfig
 
 
 class ConfigProvider:

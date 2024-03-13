@@ -1,10 +1,10 @@
 from uuid import uuid4
 import pytest
-from ragchat.application.use_cases.documents.use_cases import DocumentsUseCases
+from ragchat.application.documents.use_cases import DocumentsUseCases
 from ragchat.common import is_uuid4
 
 from ragchat.data.documents import InMemoryDocumentRepository
-from ragchat.domain import Document
+from ragchat.domain.documents import Document
 
 
 @pytest.fixture
@@ -18,9 +18,11 @@ def setup():
 def test_add_a_new_document(setup):
     # Arrange
     repository, sut = setup
+    source = "https://www.google.com"
+    name = "Test Doc"
 
     # Act
-    returned_document = sut.add("https://www.google.com")
+    returned_document = sut.add(source=source, name=name)
 
     # Assert
     assert is_uuid4(str(returned_document.id)), "New ID is not a UUID v4"
@@ -33,10 +35,23 @@ def test_add_a_new_document(setup):
 def test_add_a_new_document_fails_when_source_is_invalid(setup):
     # Arrange
     repository, sut = setup
+    source = "NotValidPath"
+    name = "some doc"
 
     # Act and Assert
     with pytest.raises(Exception):
-        sut.add("NotValidPath")
+        sut.add(source=source, name=name)
+
+
+def test_add_a_new_document_fails_when_name_is_missing(setup):
+    # Arrange
+    repository, sut = setup
+    source = "https://www.google.com"
+    name = None
+
+    # Act and Assert
+    with pytest.raises(Exception):
+        sut.add(source=source, name=name)
 
 
 def test_delete_a_document(setup):
@@ -44,7 +59,9 @@ def test_delete_a_document(setup):
     repository, sut = setup
 
     # Act
-    doc_to_delete = Document(id=uuid4(), source="https://www.google.com")
+    doc_to_delete = Document(
+        id=uuid4(), source="https://www.google.com", name="Google"
+    )
     repository._documents[doc_to_delete.id] = doc_to_delete
 
     deleted_doc = sut.delete(doc_to_delete.id)
@@ -80,8 +97,8 @@ def test_list_returns_list_of_documents(setup):
     # Arrange
     repository, sut = setup
 
-    doc1 = Document(id=uuid4(), source="https://www.google.com")
-    doc2 = Document(id=uuid4(), name="https://www.yahoo.com")
+    doc1 = Document(id=uuid4(), source="https://www.google.com", name="doc1")
+    doc2 = Document(id=uuid4(), source="https://www.yahoo.com", name="doc2")
 
     repository._documents[doc1.id] = doc1
     repository._documents[doc2.id] = doc2

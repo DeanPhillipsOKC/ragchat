@@ -1,8 +1,5 @@
 from uuid import UUID
-from ragchat.domain import (
-    IDocumentRepository,
-    Document,
-)
+from ragchat.domain.documents import IDocumentRepository, Document
 
 
 class InMemoryDocumentRepository(IDocumentRepository):

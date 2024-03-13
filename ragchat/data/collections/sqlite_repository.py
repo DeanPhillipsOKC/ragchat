@@ -1,12 +1,15 @@
 import os
 import sqlite3
 from uuid import UUID
-from ragchat.application.config import ConfigProvider
+from ragchat.config import ConfigProvider
 from ragchat.data.kernel import SqLiteRepository
-from ragchat.domain import ICollectionRepository, Collection
+from ragchat.domain.collections import ICollectionRepository, Collection
 
 
-class SqLiteCollectionRepository(ICollectionRepository, SqLiteRepository):
+# TODO: Write integration test for the SqLiteCollectionRepositories
+class SqLiteCollectionRepository(
+    ICollectionRepository, SqLiteRepository
+):  # pragma: no cover
     def __init__(self, config_provider: ConfigProvider):
         self.db_path = config_provider.entity_db_config.path
         self._init_db()

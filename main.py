@@ -1,5 +1,6 @@
-from dependency_injector.wiring import Provide, inject
+from dependency_injector.wiring import inject
 from ragchat.ioc.container import Container
+
 
 @inject
 def main():
@@ -7,7 +8,8 @@ def main():
     cli = container.cli_factory()
     cli.run()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # do work
     main()
     print("done")

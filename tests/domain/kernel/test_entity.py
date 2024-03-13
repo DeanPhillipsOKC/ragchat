@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from ragchat.domain import Entity
+from ragchat.domain.kernel import Entity
 
 
 class _TestEntity(Entity):
@@ -28,9 +28,7 @@ def test_entity_equality():
     entity2 = _TestEntity(id=entity_id)
     entity3 = _TestEntity(id=uuid4())
 
-    assert (
-        entity1 == entity2
-    ), "Entities with the same ID should be considered equal"
+    assert entity1 == entity2
     assert (
         entity1 != entity3
     ), "Entities with different IDs should not be considered equal"

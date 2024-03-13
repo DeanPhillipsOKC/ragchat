@@ -1,6 +1,8 @@
 import pytest
 
-from ragchat.controllers import DocumentsController
+from ragchat.controllers.documents.documents_controller import (
+    DocumentsController,
+)
 
 
 @pytest.fixture
@@ -16,18 +18,18 @@ def test_do_exit(sut, capsys):
     captured = capsys.readouterr()
 
     # Assert
-    assert (
-        result
-    ), "do_exit must return True in order to exit to the previous menu."
+    assert result
     assert "Exiting document management mode...\n" == captured.out
 
 
 def test_do_add_using_url(sut, capsys):
     # Arrange
     url = "https://www.google.com"
+    name = "HTML doc"
+    args = f'{url} "{name}"'
 
     # Act
-    sut.do_add(url)
+    sut.do_add(args)
     captured = capsys.readouterr()
 
     # Assert
@@ -40,9 +42,11 @@ def test_do_add_using_url(sut, capsys):
 def test_do_add_fails_if_url_not_valid(sut, capsys):
     # Arrange
     url = "NotValidUrl"
+    name = "HTML doc"
+    args = f'{url} "{name}"'
 
     # Act
-    sut.do_add(url)
+    sut.do_add(args)
     captured = capsys.readouterr()
 
     # Assert
@@ -58,9 +62,11 @@ def test_do_add_using_path(sut, capsys):
     # Document validator needs a path that points to
     # a file so just use this test script.
     path = __file__
+    name = "Some doc"
+    args = f'{path} "{name}"'
 
     # Act
-    sut.do_add(path)
+    sut.do_add(args)
     captured = capsys.readouterr()
 
     # Assert
@@ -70,9 +76,11 @@ def test_do_add_using_path(sut, capsys):
 def test_do_add_fails_if_path_not_valid(sut, capsys):
     # Arrange
     path = "NotValidPath"
+    name = "Some doc"
+    args = f'{path} "{name}"'
 
     # Act
-    sut.do_add(path)
+    sut.do_add(args)
     captured = capsys.readouterr()
 
     # Assert
@@ -80,3 +88,8 @@ def test_do_add_fails_if_path_not_valid(sut, capsys):
         "The 'add' command requires a valid path or URL."
         "\nUsage: add <path|URL>\n" == captured.out
     )
+
+
+def test_do_add_fails_if_name_not_supplied(sut, capsys):
+    # Arrange
+    pass

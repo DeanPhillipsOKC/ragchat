@@ -1,14 +1,14 @@
 from typing import List
 from uuid import UUID, uuid4
-from ragchat.domain import Document, IDocumentRepository
+from ragchat.domain.documents import Document, IDocumentRepository
 
 
 class DocumentsUseCases:
     def __init__(self, repository: IDocumentRepository):
         self.repository = repository
 
-    def add(self, source: str) -> Document:
-        doc = Document(id=str(uuid4()), source=source)
+    def add(self, source: str, name: str) -> Document:
+        doc = Document(id=str(uuid4()), source=source, name=name)
 
         self.repository.add(doc)
 

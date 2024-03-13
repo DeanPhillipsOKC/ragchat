@@ -1,7 +1,7 @@
 from abc import ABC
 import json
 from typing import Generic, Type, TypeVar
-from ragchat.domain import Entity
+from ragchat.domain.kernel import Entity
 
 T = TypeVar("T", bound=Entity)
 

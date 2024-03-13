@@ -1,5 +1,4 @@
 from .config_provider import ConfigProvider
-from .entity_db_config import EntityDbConfig
-
+from .entity_db.entity_db_config import EntityDbConfig
 
 __all__ = ["ConfigProvider", "EntityDbConfig"]
