@@ -90,6 +90,68 @@ def test_do_add_fails_if_path_not_valid(sut, capsys):
     )
 
 
-def test_do_add_fails_if_name_not_supplied(sut, capsys):
+def test_do_add_fails_if_no_args_supplied(sut, capsys):
     # Arrange
-    pass
+    args = None
+
+    # Act
+    sut.do_add(args)
+    capsys.readouterr()
+
+    # Assert
+    assert (
+        "The 'add' command requires a valid path and name."
+        "\nUsage: add <path|URL> <name>"
+        "\nNote: If the source, or name has spaces it must be surrounded by"
+        "double quotes.\n"
+    )
+
+
+def test_do_add_fails_if_name_not_provided(sut, capsys):
+    # Arrange
+    args = "https://www.google.com"
+
+    # Act
+    sut.do_add(args)
+    capsys.readouterr()
+
+    # Assert
+    assert (
+        "The 'add' command requires a valid path and name."
+        "\nUsage: add <path|URL> <name>"
+        "\nNote: If the source, or name has spaces it must be surrounded by"
+        "double quotes.\n"
+    )
+
+
+def test_do_add_fails_if_name_has_space_and_no_double_quote(sut, capsys):
+    # Arrange
+    source = "https:www.google.com"
+    name = "My File.txt"
+    args = f"{source} {name}"
+
+    # Act
+    sut.do_add(args)
+    capsys.readouterr()
+
+    # Assert
+    assert (
+        "The 'add' command requires a valid path and name."
+        "\nUsage: add <path|URL> <name>"
+        "\nNote: If the source, or name has spaces it must be surrounded by"
+        "double quotes.\n"
+    )
+
+
+def test_do_add_does_not_fail_if_name_has_space_wrapped_in_quotes(sut, capsys):
+    # Arrange
+    source = "https:www.google.com"
+    name = '"My File.txt"'
+    args = f"{source} {name}"
+
+    # Act
+    sut.do_add(args)
+    captured = capsys.readouterr()
+
+    # Assert
+    assert f"Added a new document with source: {source}\n" == captured.out
