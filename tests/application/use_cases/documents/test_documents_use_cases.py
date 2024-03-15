@@ -1,5 +1,6 @@
 from uuid import uuid4
 import pytest
+from ragchat.application.documents.dtos import ListDocumentsViewModel
 from ragchat.application.documents.use_cases import DocumentsUseCases
 from ragchat.common import is_uuid4
 
@@ -107,12 +108,19 @@ def test_list_returns_list_of_documents(setup):
     list_results = sut.list()
 
     # Assert
-    list_expected = [doc1, doc2]
+    list_expected = [
+        ListDocumentsViewModel(
+            id=str(doc1.id), name=doc1.name, type=doc1.type
+        ),
+        ListDocumentsViewModel(
+            id=str(doc2.id), name=doc2.name, type=doc2.type
+        ),
+    ]
 
     for expected, result in zip(list_expected, list_results):
         assert expected.id == result.id
+        assert expected.name == result.name
         assert expected.type == result.type
-        assert expected.content == result.content
 
 
 def test_list_returns_nothing_if_list_of_documents_is_empty(setup):

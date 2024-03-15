@@ -1,4 +1,5 @@
 from dependency_injector import containers, providers
+from ragchat.application.documents.use_cases import DocumentsUseCases
 from ragchat.config import ConfigProvider
 from ragchat.application.collections.use_cases import CollectionsUseCases
 from ragchat.controllers.collections import CollectionsController
@@ -23,11 +24,17 @@ class Container(containers.DeclarativeContainer):
         CollectionsUseCases, collection_repository_factory
     )
 
+    document_use_case_factory = providers.Factory(
+        DocumentsUseCases, document_repository_factory
+    )
+
     collections_controller_factory = providers.Factory(
         CollectionsController, collection_use_cases_factory
     )
 
-    documents_controller_factory = providers.Factory(DocumentsController)
+    documents_controller_factory = providers.Factory(
+        DocumentsController, document_use_case_factory
+    )
 
     utilities_controller_factory = providers.Factory(
         UtilitiesController, config_provider

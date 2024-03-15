@@ -1,5 +1,6 @@
 from typing import List
 from uuid import UUID, uuid4
+from ragchat.application.documents.dtos import ListDocumentsViewModel
 from ragchat.domain.documents import Document, IDocumentRepository
 
 
@@ -22,4 +23,11 @@ class DocumentsUseCases:
     def list(self) -> List[Document]:
         docs = self.repository.list()
 
-        return docs
+        docs_view_model = [
+            ListDocumentsViewModel(
+                id=str(doc.id), name=doc.name, type=doc.type
+            )
+            for doc in docs
+        ]
+
+        return docs_view_model

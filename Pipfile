@@ -9,6 +9,7 @@ pydantic = "*"
 magika = "*"
 requests = "*"
 coverage = "*"
+tabulate = "*"
 
 [dev-packages]
 pytest = "*"
