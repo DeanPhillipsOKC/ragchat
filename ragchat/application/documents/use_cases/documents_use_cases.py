@@ -32,7 +32,8 @@ class DocumentsUseCases:
 
         return deleted_doc
 
-    def list(self, collection_id: UUID) -> List[Document]:
+    def list(self) -> List[Document]:
+        collection_id = self.collection_repository.get_selected().id
         docs = self.repository.list(collection_id)
 
         docs_view_model = [

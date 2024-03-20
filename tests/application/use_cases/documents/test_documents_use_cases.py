@@ -127,7 +127,7 @@ def test_list_returns_list_of_documents(setup):
     repository._documents[doc2.id] = doc2
 
     # Act
-    list_results = sut.list(selected_collection.id)
+    list_results = sut.list()
 
     # Assert
     list_expected = [
@@ -150,7 +150,7 @@ def test_list_returns_nothing_if_list_of_documents_is_empty(setup):
     repository, sut, selected_collection, collection_repository = setup
 
     # Act
-    list_results = sut.list(selected_collection.id)
+    list_results = sut.list()
 
     # Assert
     assert list_results == []
@@ -190,7 +190,7 @@ def test_list_only_returns_documents_in_the_selected_collection(setup):
     repository._documents[baz_doc.id] = baz_doc
 
     # Act
-    list_results = sut.list(selected_collection.id)
+    list_results = sut.list()
 
     # Assert
     assert len(list_results) == 1
