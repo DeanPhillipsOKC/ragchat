@@ -27,7 +27,7 @@ class SqLiteCollectionRepository(
                 """
                 CREATE TABLE IF NOT EXISTS collections (
                     id TEXT PRIMARY KEY,
-                    data TEXT NOT NULL
+                    name TEXT NOT NULL
                 )
             """
             )
@@ -48,7 +48,7 @@ class SqLiteCollectionRepository(
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT INTO collections (id, data) VALUES (?, ?)",
+                "INSERT INTO collections (id, name) VALUES (?, ?)",
                 self._entity_to_row(collection),
             )
             conn.commit()
@@ -68,10 +68,7 @@ class SqLiteCollectionRepository(
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM collections")
-            return [
-                self._row_to_entity(row, Collection)
-                for row in cursor.fetchall()
-            ]
+            return [self._row_to_entity(row) for row in cursor.fetchall()]
 
     def select(self, guid: UUID):
         with sqlite3.connect(self.db_path) as conn:
@@ -91,7 +88,7 @@ class SqLiteCollectionRepository(
                     (selected_id, str(guid)),
                 )
                 conn.commit()
-                return self._row_to_entity(row, Collection)
+                return self._row_to_entity(row)
             else:
                 return None
 
@@ -105,5 +102,12 @@ class SqLiteCollectionRepository(
             )
             row = cursor.fetchone()
             if row:
-                return self._row_to_entity(row, Collection)
+                return self._row_to_entity(row)
             return None
+
+    def _entity_to_row(self, collection) -> tuple:
+        return (str(collection.id), collection.name)
+
+    def _row_to_entity(self, row) -> Collection:
+        id_str, name = row
+        return Collection(id=id_str, name=name)

@@ -23,8 +23,11 @@ class DocumentsUseCases:
             name=name,
         )
 
-        self.repository.add(doc)
-
+        try:
+            self.repository.add(doc)
+        except Exception as e:
+            print(e)
+            raise
         return doc
 
     def delete(self, id: UUID) -> Document:
@@ -33,6 +36,9 @@ class DocumentsUseCases:
         return deleted_doc
 
     def list(self) -> List[Document]:
+        # TODO: Need to get a test written and get this fixed so that we don't
+        # get an NRE if there is no selected collection
+
         collection_id = self.collection_repository.get_selected().id
         docs = self.repository.list(collection_id)
 
