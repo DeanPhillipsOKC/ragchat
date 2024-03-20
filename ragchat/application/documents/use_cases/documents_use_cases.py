@@ -28,6 +28,7 @@ class DocumentsUseCases:
         except Exception as e:
             print(e)
             raise
+
         return doc
 
     def delete(self, id: UUID) -> Document:

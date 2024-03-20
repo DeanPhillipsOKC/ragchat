@@ -10,6 +10,10 @@ magika = "*"
 requests = "*"
 coverage = "*"
 tabulate = "*"
+langchain-text-splitters = "*"
+langchain = "*"
+langchain-core = "*"
+lxml = "*"
 
 [dev-packages]
 pytest = "*"
