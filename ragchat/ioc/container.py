@@ -25,7 +25,9 @@ class Container(containers.DeclarativeContainer):
     )
 
     document_use_case_factory = providers.Factory(
-        DocumentsUseCases, document_repository_factory
+        DocumentsUseCases,
+        document_repository_factory,
+        collection_repository_factory,
     )
 
     collections_controller_factory = providers.Factory(

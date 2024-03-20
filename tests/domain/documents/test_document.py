@@ -11,7 +11,7 @@ def test_can_load_from_url():
     name = "Test HTML doc"
 
     # Act
-    doc = Document(id=id, source=url, name=name)
+    doc = Document(id=id, collection_id=uuid4(), source=url, name=name)
 
     # Assert
     assert doc.id == id
@@ -26,7 +26,7 @@ def test_can_load_from_path():
     name = "Test file"
 
     # Act
-    doc = Document(id=id, source=path, name=name)
+    doc = Document(id=id, collection_id=uuid4(), source=path, name=name)
 
     # Assert
     assert doc.id == id
@@ -64,7 +64,7 @@ def test_can_identify_pdfs():
     name = "Test PDF"
 
     # Act
-    doc = Document(id=id, source=path, name=name)
+    doc = Document(id=id, collection_id=uuid4(), source=path, name=name)
 
     # Assert
     assert doc.id == id
@@ -79,7 +79,7 @@ def test_can_identify_html():
     name = "Test HTML doc"
 
     # Act
-    doc = Document(id=id, source=url, name=name)
+    doc = Document(id=id, collection_id=uuid4(), source=url, name=name)
 
     # Assert
     assert doc.id == id

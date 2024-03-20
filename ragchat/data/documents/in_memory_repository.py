@@ -16,5 +16,6 @@ class InMemoryDocumentRepository(IDocumentRepository):
         else:
             return None
 
-    def list(self) -> list[Document]:
-        return list(self._documents.values())
+    def list(self, collection_id: UUID) -> list[Document]:
+        docs = self._documents.values()
+        return list(filter(lambda d: (d.collection_id == collection_id), docs))

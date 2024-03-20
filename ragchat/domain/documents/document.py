@@ -18,6 +18,7 @@ def is_url(source: str) -> bool:
 
 class Document(BaseModel):
     id: UUID
+    collection_id: UUID
     source: Optional[Union[HttpUrl, FilePath]] = None
     name: str
     type: Optional[str] = None

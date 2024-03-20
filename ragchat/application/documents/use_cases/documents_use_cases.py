@@ -2,14 +2,26 @@ from typing import List
 from uuid import UUID, uuid4
 from ragchat.application.documents.dtos import ListDocumentsViewModel
 from ragchat.domain.documents import Document, IDocumentRepository
+from ragchat.domain.collections import ICollectionRepository
 
 
 class DocumentsUseCases:
-    def __init__(self, repository: IDocumentRepository):
+    def __init__(
+        self,
+        repository: IDocumentRepository,
+        collection_repository: ICollectionRepository,
+    ):
         self.repository = repository
+        self.collection_repository = collection_repository
 
     def add(self, source: str, name: str) -> Document:
-        doc = Document(id=str(uuid4()), source=source, name=name)
+        collection_id = self.collection_repository.get_selected().id
+        doc = Document(
+            collection_id=collection_id,
+            id=str(uuid4()),
+            source=source,
+            name=name,
+        )
 
         self.repository.add(doc)
 
@@ -20,8 +32,8 @@ class DocumentsUseCases:
 
         return deleted_doc
 
-    def list(self) -> List[Document]:
-        docs = self.repository.list()
+    def list(self, collection_id: UUID) -> List[Document]:
+        docs = self.repository.list(collection_id)
 
         docs_view_model = [
             ListDocumentsViewModel(

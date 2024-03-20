@@ -13,5 +13,5 @@ class IDocumentRepository(ABC):
         pass
 
     @abstractmethod
-    def list(self) -> list[Document]:
+    def list(self, collection_id: UUID) -> list[Document]:
         pass

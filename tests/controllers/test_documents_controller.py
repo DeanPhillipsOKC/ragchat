@@ -35,7 +35,10 @@ def test_do_exit(sut, capsys):
 @pytest.fixture
 def add_fixture(sut):
     document = Document(
-        id=uuid4(), source="https://www.google.com", name="Test Document"
+        id=uuid4(),
+        collection_id=uuid4(),
+        source="https://www.google.com",
+        name="Test Document",
     )
     sut.documents_use_cases.add.return_value = document
 
@@ -164,7 +167,10 @@ def test_do_add_does_not_fail_if_name_has_space_wrapped_in_quotes(
 @pytest.fixture
 def delete_fixture(sut):
     document = Document(
-        id=uuid4(), source="https://www.google.com", name="Test Document"
+        id=uuid4(),
+        collection_id=uuid4(),
+        source="https://www.google.com",
+        name="Test Document",
     )
     sut.documents_use_cases.delete.return_value = document
 
@@ -221,14 +227,25 @@ def test_do_delete_fails_if_document_does_not_exist(delete_fixture, capsys):
 
 @pytest.fixture
 def list_fixture(sut):
+    collection_id = uuid4()
+
     document1 = Document(
-        id=uuid4(), source="https://www.google.com", name="Test Document"
+        id=uuid4(),
+        collection_id=collection_id,
+        source="https://www.google.com",
+        name="Test Document",
     )
     document2 = Document(
-        id=uuid4(), source="https://www.yahoo.com", name="Test Document2"
+        id=uuid4(),
+        collection_id=collection_id,
+        source="https://www.yahoo.com",
+        name="Test Document2",
     )
     document3 = Document(
-        id=uuid4(), source="https://www.facebook.com", name="Test Document3"
+        id=uuid4(),
+        collection_id=collection_id,
+        source="https://www.facebook.com",
+        name="Test Document3",
     )
     sut.documents_use_cases.list.return_value = [
         document1,
