@@ -6,10 +6,15 @@ name = "pypi"
 [packages]
 dependency-injector = "*"
 pydantic = "*"
+magika = "*"
+requests = "*"
+coverage = "*"
+tabulate = "*"
 
 [dev-packages]
 pytest = "*"
 pytest-mock = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.9"

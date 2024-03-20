@@ -1,6 +1,7 @@
 from cmd import Cmd
-from ragchat.application.use_cases.collections.use_cases import CollectionsUseCases
-from ragchat.common.guid_utilities import is_uuid4, to_uuid4
+from ragchat.application.collections.use_cases import CollectionsUseCases
+from ragchat.common import is_uuid4, to_uuid4
+
 
 class CollectionsController(Cmd):
     """Sub-command processor for collections management commands."""
@@ -13,13 +14,19 @@ class CollectionsController(Cmd):
 
     def _validate_id(self, id: str, command_name: str) -> bool:
         if not id:
-            print(f"Error: The '{command_name}' command requires a collection ID.")
+            print(
+                f"Error: The '{command_name}' command requires a "
+                "collection ID."
+            )
             return False
-        
+
         if not is_uuid4(id):
-            print(f"Error: The '{command_name}' command requires a valid collection ID (UUID v4)")
+            print(
+                f"Error: The '{command_name}' command requires a "
+                "valid collection ID (UUID v4)"
+            )
             return False
-        
+
         return True
 
     def do_add(self, arg):
@@ -28,10 +35,14 @@ class CollectionsController(Cmd):
 
         Usage: add <name>
 
-        <name> is a required argument that specifies the name of the new collection.
+        <name> is a required argument that specifies the name of
+        the new collection.
         """
         if not arg:
-            print("Error: The 'add' command requires a name for the new collection.")
+            print(
+                "Error: The 'add' command requires a name for the "
+                "new collection."
+            )
             print("Usage: add <name>")
             return
 
@@ -45,20 +56,26 @@ class CollectionsController(Cmd):
 
         Usage: delete <ID>
 
-        <ID> is a required argument that specifies the collection that you want to delete.
+        <ID> is a required argument that specifies the collection
+        that you want to delete.
         """
         if not self._validate_id(arg, "delete"):
             print("Usage: delete <ID>")
             return
-        
+
         guid = to_uuid4(arg)
 
         deleted_collection = self.collection_use_cases.delete(guid)
-        
+
         if deleted_collection:
-            print(f"Deleted colection with ID: {deleted_collection.id} and Name: {deleted_collection.name}")
+            print(
+                f"Deleted colection with ID: {deleted_collection.id} "
+                f"and Name: {deleted_collection.name}"
+            )
         else:
-            print(f"Error: Could not find a collection with ID: {arg} to delete.")
+            print(
+                f"Error: Could not find a collection with ID: {arg} to delete."
+            )
 
     def do_list(self, arg):
         """List all collections"""
@@ -66,7 +83,7 @@ class CollectionsController(Cmd):
 
         # Print header
         print(f"{'ID':38} {'Name'}")
-        print('-' * 52)  # Adjusted width for the 'Selected' column
+        print("-" * 52)  # Adjusted width for the 'Selected' column
 
         for collection in collections:
             selected_mark = "*" if collection.is_selected else " "
@@ -74,7 +91,7 @@ class CollectionsController(Cmd):
 
     def do_select(self, arg):
         """
-        Add a collection to your session context.  This will let 
+        Add a collection to your session context.  This will let
         you manage documents in that collection, or start an interactive
         chat across documents in that collection.
 
