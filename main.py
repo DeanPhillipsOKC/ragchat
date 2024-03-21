@@ -1,5 +1,6 @@
 from dependency_injector.wiring import inject
 from ragchat.ioc.container import Container
+from dotenv import load_dotenv
 
 
 @inject
@@ -10,6 +11,6 @@ def main():
 
 
 if __name__ == "__main__":
-    # do work
+    load_dotenv()
     main()
     print("done")
