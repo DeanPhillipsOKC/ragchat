@@ -1,5 +1,5 @@
 from langchain_text_splitters import HTMLHeaderTextSplitter
-from ragchat.domain.splitters.html.splitter_interface import (
+from ragchat.domain.retrieval.splitters.splitter_interface import (
     IHtmlSplitterInterface,
 )
 from langchain_core.documents import Document

@@ -2,7 +2,7 @@
 
 import pytest
 
-from ragchat.domain.splitters.html.html_header_splitter import (
+from ragchat.domain.retrieval.splitters.html_header_splitter import (
     HtmlHeaderSplitter,
 )
 

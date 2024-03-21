@@ -14,6 +14,7 @@ langchain-text-splitters = "*"
 langchain = "*"
 langchain-core = "*"
 lxml = "*"
+pymupdf = "*"
 
 [dev-packages]
 pytest = "*"
