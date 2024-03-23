@@ -1,8 +1,10 @@
 from typing import List
 from uuid import UUID, uuid4
 from ragchat.application.documents.dtos import ListDocumentsViewModel
+from ragchat.application.events.event_dispatcher import EventDispatcher
 from ragchat.domain.documents import Document, IDocumentRepository
 from ragchat.domain.collections import ICollectionRepository
+from ragchat.domain.documents.document_added_event import DocumentAddedEvent
 
 
 class DocumentsUseCases:
@@ -10,9 +12,11 @@ class DocumentsUseCases:
         self,
         repository: IDocumentRepository,
         collection_repository: ICollectionRepository,
+        event_dispatcher: EventDispatcher,
     ):
         self.repository = repository
         self.collection_repository = collection_repository
+        self.event_dispatcher = event_dispatcher
 
     def add(self, source: str, name: str) -> Document:
         collection_id = self.collection_repository.get_selected().id
@@ -28,6 +32,10 @@ class DocumentsUseCases:
         except Exception as e:
             print(e)
             raise
+
+        domain_event = DocumentAddedEvent(document=doc)
+        self.event_dispatcher.emit(event=domain_event)
+
         return doc
 
     def delete(self, id: UUID) -> Document:

@@ -7,13 +7,13 @@ class EventDispatcher:
         self.handlers = {}
 
     def subscribe(self, event: IDomainEvent, handler: IEventHandler):
-        event_name = event.get_event_name
+        event_name = event.get_event_name()
         if event_name not in self.handlers:
             self.handlers[event_name] = []
         self.handlers[event_name].append(handler)
 
     def unsubscribe(self, event: IDomainEvent, handler):
-        event_name = event.get_event_name
+        event_name = event.get_event_name()
         if event_name in self.handlers:
             try:
                 self.handlers[event_name].remove(handler)
@@ -23,6 +23,6 @@ class EventDispatcher:
                 pass
 
     def emit(self, event: IDomainEvent):
-        event_name = event.get_event_name
+        event_name = event.get_event_name()
         for handler in self.handlers.get(event_name, []):
             handler.handle(event)

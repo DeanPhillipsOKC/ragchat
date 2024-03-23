@@ -2,6 +2,7 @@ from uuid import uuid4
 import pytest
 from ragchat.application.documents.dtos import ListDocumentsViewModel
 from ragchat.application.documents.use_cases import DocumentsUseCases
+from ragchat.application.events.event_dispatcher import EventDispatcher
 from ragchat.common import is_uuid4
 
 from ragchat.data.collections import InMemoryCollectionRepository
@@ -14,7 +15,10 @@ from ragchat.domain.documents import Document
 def setup():
     repository = InMemoryDocumentRepository()
     collection_repository = InMemoryCollectionRepository()
-    sut = DocumentsUseCases(repository, collection_repository)
+    event_dispatcher = EventDispatcher()
+    sut = DocumentsUseCases(
+        repository, collection_repository, event_dispatcher=event_dispatcher
+    )
 
     collection = Collection(id=uuid4(), name="foo")
 

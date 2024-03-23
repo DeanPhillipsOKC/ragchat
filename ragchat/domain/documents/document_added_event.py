@@ -6,5 +6,5 @@ class DocumentAddedEvent(IDomainEvent):
     def __init__(self, document: Document):
         self.document = document
 
-    def get_event_name() -> str:
+    def get_event_name(self) -> str:
         return "document_added"
