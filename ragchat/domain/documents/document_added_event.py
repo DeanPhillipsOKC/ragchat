@@ -1,4 +1,4 @@
-from xml.dom.minidom import Document
+from ragchat.domain.documents.document import Document
 from ragchat.domain.kernel.domain_event_interface import IDomainEvent
 
 

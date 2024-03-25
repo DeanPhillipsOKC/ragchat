@@ -10,6 +10,7 @@ magika = "*"
 requests = "*"
 coverage = "*"
 tabulate = "*"
+chromadb = "*"
 
 [dev-packages]
 pytest = "*"

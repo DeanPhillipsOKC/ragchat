@@ -1,5 +1,9 @@
 from dependency_injector import containers, providers
 from ragchat.application.documents.use_cases import DocumentsUseCases
+from ragchat.application.events.document_added_handler import (
+    ChromaDocumentAddedHandler,
+)
+from ragchat.application.events.event_dispatcher import EventDispatcher
 from ragchat.config import ConfigProvider
 from ragchat.application.collections.use_cases import CollectionsUseCases
 from ragchat.controllers.collections import CollectionsController
@@ -12,6 +16,12 @@ from ragchat.data import SqLiteCollectionRepository, SqLiteDocumentRepository
 class Container(containers.DeclarativeContainer):
     config_provider = providers.Singleton(
         ConfigProvider, config_path="config.json"
+    )
+
+    event_dispatcher_factory = providers.Singleton(EventDispatcher)
+
+    document_added_handler_factory = providers.Factory(
+        ChromaDocumentAddedHandler
     )
 
     collection_repository_factory = providers.Factory(
@@ -30,6 +40,7 @@ class Container(containers.DeclarativeContainer):
         DocumentsUseCases,
         document_repository_factory,
         collection_repository_factory,
+        event_dispatcher_factory,
     )
 
     collections_controller_factory = providers.Factory(
