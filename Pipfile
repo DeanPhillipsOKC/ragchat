@@ -9,8 +9,8 @@ pydantic = "*"
 magika = "*"
 requests = "*"
 coverage = "*"
-tabulate = "*"
 chromadb = "*"
+rich = "*"
 
 [dev-packages]
 pytest = "*"

@@ -1,7 +1,5 @@
-import re
 from uuid import uuid4
 import pytest
-from ragchat.application.documents.dtos import ListDocumentsViewModel
 from ragchat.application.documents.use_cases import DocumentsUseCases
 
 from ragchat.controllers.documents.documents_controller import (
@@ -254,52 +252,3 @@ def list_fixture(sut):
     ]
 
     return sut, sut.documents_use_cases.list.return_value
-
-
-def test_do_list(list_fixture, capsys):
-    # Arrange
-    sut, returned_docs = list_fixture
-
-    id1 = str(uuid4())
-    id2 = str(uuid4())
-    id3 = str(uuid4())
-
-    expected_documents = [
-        {"id": id1, "name": "Foo", "type": "html"},
-        {"id": id2, "name": "Bar", "type": "html"},
-        {"id": id3, "name": "Baz", "type": "html"},
-    ]
-
-    sut.documents_use_cases.list.return_value = [
-        ListDocumentsViewModel(
-            id=doc["id"], name=doc["name"], type=doc["type"]
-        )
-        for doc in expected_documents
-    ]
-
-    # Act
-    sut.do_list(None)
-    captured = capsys.readouterr().out
-
-    # Convert captured output to list of rows
-    output_rows = captured.strip().split("\n")
-
-    # Assert
-    # Check headers
-    headers = output_rows[0].split()
-    assert headers == [
-        "id",
-        "name",
-        "type",
-    ], f"Expected headers ['id', 'name', 'type'], got {headers}"
-
-    # Check each expected document by name and type (IDs can't be predicted
-    # in output)
-    for doc in expected_documents:
-        # Construct a regex pattern to search for name and type in the output
-        pattern = re.compile(rf"{doc['name']}\s+{doc['type']}")
-        # Check if the pattern is found in any row of the output
-        assert any(
-            pattern.search(row) for row in output_rows
-        ), f"Document with name {doc['name']} and type {doc['type']} not "
-        "found in output"

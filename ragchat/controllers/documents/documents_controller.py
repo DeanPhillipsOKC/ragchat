@@ -1,12 +1,12 @@
 from cmd import Cmd
 import re
 
-from tabulate import tabulate
 from ragchat.application.documents.use_cases.documents_use_cases import (
     DocumentsUseCases,
 )
 
-from ragchat.domain.kernel import TableUtilities
+from rich.console import Console
+from rich.table import Table
 
 
 class DocumentsController(Cmd):
@@ -78,11 +78,16 @@ class DocumentsController(Cmd):
     def do_list(self, arg):
         docs = self.documents_use_cases.list()
 
-        if docs and len(docs) > 0:
-            headers, rows = (
-                TableUtilities.convert_to_tabulate_headers_and_rows(docs)
-            )
-            print(tabulate(rows, headers=headers))
+        table = Table(show_header=True, header_style="bold magenta")
+
+        table.add_column("ID", style="dim")
+        table.add_column("Name")
+        table.add_column("Type")
+
+        for doc in docs:
+            table.add_row(doc.id, doc.name, doc.type)
+
+        Console().print(table)
 
     def do_exit(self, arg):
         """Exit the document management command mode."""

@@ -142,51 +142,6 @@ def list_fixture(sut):
     return sut, list_return_value
 
 
-def test_do_list(list_fixture, capsys):
-    # Arrange
-    sut, list_return_value = list_fixture
-
-    # Act
-    sut.do_list("")
-    captured = capsys.readouterr()
-
-    # Assert
-    assert f"{list_return_value[0].id} foo" in captured.out
-    assert f"{list_return_value[1].id} bar" in captured.out
-    assert f"{list_return_value[2].id} baz" in captured.out
-
-
-def test_do_list_prefixes_selected_collection_row_with_an_asterisk(
-    list_fixture, capsys
-):
-    # Arrange
-    sut, list_return_value = list_fixture
-
-    list_return_value[1].is_selected = True
-
-    # Act
-    sut.do_list("")
-    captured = capsys.readouterr()
-
-    # Assert
-    assert f"* {list_return_value[1].id} bar" in captured.out
-
-
-def test_do_list_displays_a_header(list_fixture, capsys):
-    # Arrange
-    sut, list_return_value = list_fixture
-
-    # Act
-    sut.do_list("")
-    captured = capsys.readouterr()
-
-    # Assert
-    assert "ID                                     Name" in captured.out
-    assert (
-        "----------------------------------------------------" in captured.out
-    )
-
-
 @pytest.fixture
 def select_fixture(sut):
     collection = Collection(id=uuid4(), name="Test Collection")

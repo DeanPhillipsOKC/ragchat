@@ -1,6 +1,8 @@
 from cmd import Cmd
 from ragchat.application.collections.use_cases import CollectionsUseCases
 from ragchat.common import is_uuid4, to_uuid4
+from rich.table import Table
+from rich.console import Console
 
 
 class CollectionsController(Cmd):
@@ -81,13 +83,15 @@ class CollectionsController(Cmd):
         """List all collections"""
         collections = self.collection_use_cases.list()
 
-        # Print header
-        print(f"{'ID':38} {'Name'}")
-        print("-" * 52)  # Adjusted width for the 'Selected' column
+        table = Table(show_header=True, header_style="bold magenta")
+        table.add_column("ID", style="dim")
+        table.add_column("Name")
 
         for collection in collections:
             selected_mark = "*" if collection.is_selected else " "
-            print(f"{selected_mark} {collection.id:36} {collection.name}")
+            table.add_row(f"{selected_mark}{collection.id}", collection.name)
+
+        Console().print(table)
 
     def do_select(self, arg):
         """
